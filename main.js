@@ -66,7 +66,7 @@ const createWindow = () => {
 	width: 800,
 	height: 600,
 		webPreferences: {
-		  sandbox: true, // <-- security reason, code not modify the OS file system   
+		  sandbox: true, // <-- security reason, code not modify the OS file system
 		  preload: path.join(__dirname, 'src/main-process/preload.js'),
 		},
 	});
