@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self';"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self';"
+    />
+    <title>Hello from Electron renderer!</title>
+  </head>
+  <body>
+    <h1>Inserts input data into array</h1>
+	<div id="myform">
+		<fieldset>
+			<legend>Form</legend>
+			<input type="text" placeholder="write here">
+			<!-- <input type="submit" value="Submit"> -->
+			<button id="insertButton">Insert</button>
+		</fieldset>
+	</div>
+	
+	<h1>Array elements:</h1>
+	<p id="arrayResult"></p>
+	<button id="saveArray">Save array</button>
+	<button id="clearArray">Clear array</button>
+	
+	<h1>Get variable from the 'main' process</h1>
+	<p id="globalVar-p"></p>
+	
+	<button id="pingButton">Send 'ping' to main process</button>
+  </body>
+  <script defer src="src/renderer-process/array-inserted-elements.js"></script>
+</html>

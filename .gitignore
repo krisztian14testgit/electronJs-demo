@@ -1,0 +1,5 @@
+# built app out
+/out
+
+# bundels dependencies
+/node_modules
