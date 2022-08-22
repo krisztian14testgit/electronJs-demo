@@ -55,7 +55,7 @@
 5.	Running the 'start' script.
 	* command: `npm run start`
 	
-	* If you get this error: "[possible errors]"
+	* If you get this error: **"Not allowed to load local resource: [file path]"**
 		* attaching the path of the /dist/project/index.html is **wrong**.
 		
 	* If you use "angular-material" library
