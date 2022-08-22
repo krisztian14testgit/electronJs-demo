@@ -62,7 +62,7 @@ function ipcGetSavedArray() {
 			let arrayElements = fs.readFileSync('saved-array.txt', 'utf8');
 			// removing brackets: []
 			arrayElements = arrayElements.substring(1);
-			return arrayElements.substring(0, arrayElements.length - 1);
+			return arrayElements.substring(0, arrayElements.length - 1) + ',';
 		} catch (err) {
 			console.log(err);
 			return Promise.resolve('file not found!');
@@ -90,6 +90,9 @@ const createWindow = () => {
 	/** Open/close devTool by f12 button */
 	let isOpenDevTool = false;
 	let devToolMethod = 'openDevTools';
+	// after window creation, open DevTool window
+	mainWindow.webContents[devToolMethod]();
+	// keyboad: f12
 	mainWindow.webContents.on("before-input-event", (event, input) => {
 		if (input.type === 'keyDown' && input.key === 'F12') {
 			devToolMethod = !isOpenDevTool ? 'openDevTools' : 'closeDevTools';
