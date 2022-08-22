@@ -9,12 +9,22 @@
  * renderer: 		displaying html tags,
 					using window, document prototype, setTimeout, setInterval
 					running javascript files
+					
+ * for Angular:   Helping side: https://buddy.works/tutorials/building-a-desktop-app-with-electron-and-angular
 */
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const url = require("url");
 
+// the path of the index.html
 const startedPage = 'index.html';
+
+// url attaching of index.html
+const indexUrl = url.format(path.join(__dirname, startedPage), {
+    protocol: 'file',
+    slashes: true,
+});
 
 /** IPC - Inter Process Communication: https://www.electronjs.org/docs/latest/tutorial/ipc
   * function pair: ipcMian - ipcRenderer
@@ -60,7 +70,7 @@ function ipcGetSavedArray() {
 	});
 }
 
-/** How to creata default eletron window */
+/** How to creata default electron window */
 const createWindow = () => {	
 	const mainWindow = new BrowserWindow({
 	width: 800,
@@ -75,6 +85,7 @@ const createWindow = () => {
 	ipcMain.handle('ping', (getMsg) => 'main process got: ' + getMsg);
   
 	mainWindow.loadFile(startedPage);
+	// mainWindow.loadURL(indexUrl);
   
 	/** Open/close devTool by f12 button */
 	let isOpenDevTool = false;
@@ -116,6 +127,6 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
 	// quit the app in linux, win platforms
 	console.log('platform:', process.platform);
-	// if it is not mac
+	// if it is not Mac, quitting from the app
 	if (process.platform !== 'dardwin') { app.quit(); }
 });
