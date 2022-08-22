@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-	"start": "electron main.js",
+    "start": "electron main.js",
     "start.forge": "electron-forge start",
     "package": "electron-forge package",
     "make.distribute": "electron-forge make"
@@ -18,7 +18,7 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.65",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.65",
     "@electron-forge/maker-zip": "^6.0.0-beta.65",
-    "electron": "^20.0.1"
+    "electron": "^20.0.3"
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0"
