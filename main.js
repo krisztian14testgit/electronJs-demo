@@ -63,8 +63,9 @@ const ipcSubscribeOnSavingArray = () => {
   * @return: Promise.resolve(fileContent)
 */
 function ipcGetSavedArray() { 
-	ipcMain.handle('load-array', () => {
+	ipcMain.handle('load-array', (_event, dataFromRenderer) => {
 		try {
+			console.log('got data from renderer =', dataFromRenderer);
 			let arrayElements = fs.readFileSync('saved-array.txt', 'utf8');
 			// removing brackets: []
 			arrayElements = arrayElements.substring(1);
@@ -94,7 +95,7 @@ const createWindow = () => {
 	// mainWindow.loadURL(indexUrl);
   
 	/** Open/close devTool by f12 button */
-	let isOpenDevTool = false;
+	let isOpenDevTool = true;
 	let devToolMethod = 'openDevTools';
 	// after window creation, open DevTool window
 	mainWindow.webContents[devToolMethod]();

@@ -3,7 +3,7 @@
 /** Loads the content of the saved-array.txt into the arrayResult when window is rendered.*/
 const arrayResult = document.getElementById('arrayResult');
 window.addEventListener('load', (async() => {
-	arrayResult.innerText = await electronAPI.getSavedArray();
+	arrayResult.innerText = await electronAPI.getSavedArray('sent data, renderer');
 }));
 
 
