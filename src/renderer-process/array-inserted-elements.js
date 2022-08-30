@@ -34,7 +34,7 @@ saveArrayButton.addEventListener('click', () => {
 		let items = arrayResult.innerText;
 		items = items.substring(0, items.length - 1);
 		// saveArray come form the preload.js => ipcRenderer.send('chanelName', value)
-		electronAPI.saveArray(items);
+		window.electronAPI.saveArray(items);
 	}
 });
 
@@ -51,6 +51,6 @@ globalVar_p.innerText = `This node version: ${electronAPI.getNodeV()}, testVar= 
 const pingButton = document.getElementById('pingButton');
 pingButton.addEventListener('click', (async() => {
 	// emits the event form 'renderer' process to 'main' process via sendMsg
-	const response = await electronAPI.sendMsg('ping msg');
+	const response = await window.electronAPI.sendMsg('ping msg');
 	globalVar_p.innerText = response;
 }));

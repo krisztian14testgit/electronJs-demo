@@ -55,6 +55,7 @@ const ipcSubscribeOnSavingArray = () => {
   * two-way direction, return the result
   * renderer callick channel and waiting for result (Promise request),
   * using: reading file to get content, promise request
+  * return: Promise.resolve(fileContent)
 */
 function ipcGetSavedArray() { 
 	ipcMain.handle('load-array', () => {
