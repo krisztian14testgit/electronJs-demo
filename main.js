@@ -32,7 +32,10 @@ const indexUrl = url.format(path.join(__dirname, startedPage), {
   * ipc - Renderer to main,
   * one-way direction, return nothing
   * mian process is listener
-  * saving array element into the saved-array.txt when it is triggered.
+  
+  * @preloadFunc: saveArray()
+  * @using: saving array element into the saved-array.txt when it is triggered.
+  * @return: never
 */
 const ipcSubscribeOnSavingArray = () => {
 	// one-way direction communication, 
@@ -54,8 +57,10 @@ const ipcSubscribeOnSavingArray = () => {
 /** ipc - Renderer to main
   * two-way direction, return the result
   * renderer callick channel and waiting for result (Promise request),
-  * using: reading file to get content, promise request
-  * return: Promise.resolve(fileContent)
+  *
+  *	@ preloadFunc: getSavedArray()
+  * @using: reading file to get content, promise request
+  * @return: Promise.resolve(fileContent)
 */
 function ipcGetSavedArray() { 
 	ipcMain.handle('load-array', () => {
