@@ -17,5 +17,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // 'event' message stream to main process, safety good code
   sendMsg: () => ipcRenderer.invoke('ping'), // promise request => async - await
   saveArray: (array) => ipcRenderer.send('save-array', array),
-  getSavedArray: (myParam = '') => ipcRenderer.invoke('load-array', myParam), // promise request => async - await, to get array content
+  // promise request => async - await, to get array content
+  getSavedArray: (myParam = '') => ipcRenderer.invoke('load-array', myParam),
+  onMsgFromMain: (callBack) => ipcRenderer.on('from-main', callBack),
 });

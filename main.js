@@ -31,11 +31,11 @@ const indexUrl = url.format(path.join(__dirname, startedPage), {
   
   * ipc - Renderer to main,
   * one-way direction, return nothing
-  * mian process is listener
+  * mian process is listener(ipcMian.on()), renderer send data to main.
   
   * @preloadFunc: saveArray()
   * @using: saving array element into the saved-array.txt when it is triggered.
-  * @return: never
+  * @return never
 */
 const ipcSubscribeOnSavingArray = () => {
 	// one-way direction communication, 
@@ -58,14 +58,14 @@ const ipcSubscribeOnSavingArray = () => {
   * two-way direction, return the result
   * renderer callick channel and waiting for result (Promise request),
   *
-  *	@ preloadFunc: getSavedArray()
+  *	@preloadFunc: getSavedArray()
   * @using: reading file to get content, promise request
-  * @return: Promise.resolve(fileContent)
+  * @return Promise.resolve(fileContent)
 */
 function ipcGetSavedArray() { 
-	ipcMain.handle('load-array', (_event, dataFromRenderer) => {
+	ipcMain.handle('load-array', (event, dataFromRenderer) => {
 		try {
-			console.log('got data from renderer =', dataFromRenderer);
+			console.log('load-array channel: got data from renderer =', dataFromRenderer);
 			let arrayElements = fs.readFileSync('saved-array.txt', 'utf8');
 			// removing brackets: []
 			arrayElements = arrayElements.substring(1);
@@ -75,6 +75,27 @@ function ipcGetSavedArray() {
 			return Promise.resolve('file not found!');
 		}
 	});
+}
+
+/** IPC - Main to renderer
+  * two-way direction
+  * Sending message/data from the main to renderer.
+  * Important: which renderer(can more) is receiving data.
+  *
+  * @preloadFunc: onMsgFromMain(callBack)
+  * @using: It triggers when F9 button is clocked on
+  * @return never
+*/
+function ipcSendDataToRenderer(mainWindowRef) {
+	// send message to renderer
+	const value = 'sth from main';
+	mainWindowRef.webContents.send('from-main', value);
+	
+	// got message from renderer, same channel
+	ipcMain.on('from-main', (_event, value) => {
+		console.log('ipc from-main channgel: = ', value);
+	});
+	
 }
 
 /** How to creata default electron window */
@@ -88,11 +109,9 @@ const createWindow = () => {
 		},
 	});
   
-	// subscribe on 'ping' channel via the ipc to get message from 'rederer' process
-	ipcMain.handle('ping', (getMsg) => 'main process got: ' + getMsg);
-  
 	mainWindow.loadFile(startedPage);
 	// mainWindow.loadURL(indexUrl);
+	
   
 	/** Open/close devTool by f12 button */
 	let isOpenDevTool = true;
@@ -107,12 +126,19 @@ const createWindow = () => {
 			console.log(devToolMethod);
 			isOpenDevTool = !isOpenDevTool;
 		}
+		
+		if (input.type === 'keyDown' && input.key === 'F9') {
+			console.log('F9 pushed');
+			ipcSendDataToRenderer(mainWindow);
+		}
 	});
 };
 
 /** the app is ready creating an window*/
 app.whenReady().then(() => {
 	/** ipc protocol here*/
+	// subscribe on 'ping' channel via the ipc to get message from 'rederer' process
+	ipcMain.handle('ping', (getMsg) => 'main process got: ' + getMsg);
 	ipcSubscribeOnSavingArray();
 	ipcGetSavedArray();
 	

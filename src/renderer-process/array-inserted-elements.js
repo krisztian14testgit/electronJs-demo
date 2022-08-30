@@ -4,6 +4,15 @@
 const arrayResult = document.getElementById('arrayResult');
 window.addEventListener('load', (async() => {
 	arrayResult.innerText = await electronAPI.getSavedArray('sent data, renderer');
+	
+	// get data form main-process by callback(event,value) func
+	window.electronAPI.onMsgFromMain((event, value) => {
+		console.log('got message from Main: ', value);
+		
+		// replay back to main-process
+		const newValue = 'thanks data';
+		event.sender.send('from-main', newValue);
+	});
 }));
 
 
