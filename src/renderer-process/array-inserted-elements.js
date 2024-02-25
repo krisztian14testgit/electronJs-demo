@@ -1,5 +1,5 @@
 "use strict";
-
+ 
 /** Loads the content of the saved-array.txt into the arrayResult when window is rendered.*/
 const arrayResult = document.getElementById('arrayResult');
 window.addEventListener('load', (async() => {
@@ -11,7 +11,8 @@ window.addEventListener('load', (async() => {
 		
 		// replay back to main-process
 		const newValue = 'thanks data';
-		event.sender.send('from-main', newValue);
+		// event.sender.send('from-main', newValue); // not working to replay back
+		//	mainWindow.webContents.send('from-main', newValue);
 	});
 }));
 
