@@ -138,7 +138,7 @@ const createWindow = () => {
 app.whenReady().then(() => {
 	/** ipc protocol here*/
 	// subscribe on 'ping' channel via the ipc to get message from 'rederer' process
-	ipcMain.handle('ping', (getMsg) => 'main process got: ' + getMsg);
+	ipcMain.handle('ping', (getMsg) => 'main process got: ' + JSON.stringify(getMsg));
 	ipcSubscribeOnSavingArray();
 	ipcGetSavedArray();
 	
